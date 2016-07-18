@@ -1,8 +1,11 @@
 /*
  * EC11.cpp
  *
- *  Created on: 2016Äê7ÔÂ10ÈÕ
+ *  Created on: 2016ï¿½ï¿½7ï¿½ï¿½10ï¿½ï¿½
  *      Author: Romeli
+ *      PinMap:		|P17------Phase|
+ *      			|P20------xint1|
+ *      			|P21------xint2|
  */
 #include "EC11.h"
 

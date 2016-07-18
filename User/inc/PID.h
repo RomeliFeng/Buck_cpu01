@@ -1,7 +1,7 @@
 /*
  * PID.h
  *
- *  Created on: 2016Äê7ÔÂ13ÈÕ
+ *  Created on: 2016ï¿½ï¿½7ï¿½ï¿½13ï¿½ï¿½
  *      Author: Romeli
  */
 
@@ -14,6 +14,7 @@
 //void PID_Set(float64 P,float64 I,float64 D);
 float64 PID_Compute_Inside(float64 Now_Inside);
 float64 PID_Compute_Outside();
+void PID_Set_Outside_Max(float64 max);
 
 extern volatile float64 Set_Outside;
 extern volatile float64 Set_Inside;

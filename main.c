@@ -7,6 +7,8 @@
 #include "main.h"
 Uint32 t;
 float64 I_now;
+float64 U_now;
+float64 I_max = 300;
 
 void main(void) {
 
@@ -29,9 +31,11 @@ void main(void) {
 	t = micros;
 	while (1) {
 		if (micros - t >= 100) {
+			PID_Set_Outside_Max(I_max);
 			I_now = ADCData.A0.FinaData / 65535.0 * 3000.0;
+			U_now = ADCData.B0.FinaData / 65535.0 * 30.0;
 			t = micros;
-			Epwm2_Update(PID_Compute_Inside(I_now));
+			Epwm2_Update(PID_Compute_Outside(I_now, U_now));
 		}
 	}
 }

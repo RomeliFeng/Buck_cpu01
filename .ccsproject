@@ -9,5 +9,5 @@
 	<rts value="libc.a"/>
 	<templateProperties value="id=com.ti.common.project.core.emptyProjectTemplate,"/>
 	<isTargetManual value="false"/>
-	<origin value="C:/Users/Romeli/Documents/epwm_deadband_cpu01"/>
+	<origin value="C:/Users/Romeli/Desktop/Buck_cpu01"/>
 </projectOptions>

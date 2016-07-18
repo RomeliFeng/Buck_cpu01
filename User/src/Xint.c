@@ -1,7 +1,7 @@
 /*
  * Xint.c
  *
- *  Created on: 2016Äê7ÔÂ13ÈÕ
+ *  Created on: 2016ï¿½ï¿½7ï¿½ï¿½13ï¿½ï¿½
  *      Author: Romeli
  *      Work For EC11
  */
@@ -18,12 +18,13 @@ void Xint_Gpio_Init(void) {
 	EALLOW;
 	GpioCtrlRegs.GPAMUX2.bit.GPIO20 = 0;         // GPIO
 	GpioCtrlRegs.GPADIR.bit.GPIO20 = 0;          // input
-	GpioCtrlRegs.GPAQSEL2.bit.GPIO20 = 0;        // Sync
+	GpioCtrlRegs.GPAQSEL2.bit.GPIO20 = 2;        // Sync
+	GpioCtrlRegs.GPACTRL.bit.QUALPRD2 = 0x1F;    // Each sampling window is 32*SYSCLKOUT
 
 	GpioCtrlRegs.GPAMUX2.bit.GPIO21 = 0;         // GPIO
 	GpioCtrlRegs.GPADIR.bit.GPIO21 = 0;          // input
 	GpioCtrlRegs.GPAQSEL2.bit.GPIO21 = 2;        // XINT2 Qual using 6 samples
-	GpioCtrlRegs.GPACTRL.bit.QUALPRD2 = 0x1F; // Each sampling window is 510*SYSCLKOUT
+	GpioCtrlRegs.GPACTRL.bit.QUALPRD2 = 0x1F;    // Each sampling window is 32*SYSCLKOUT
 
 	GpioCtrlRegs.GPAMUX2.bit.GPIO17 = 0;		 // GPIO
 	GpioCtrlRegs.GPADIR.bit.GPIO17 = 0;          // input

@@ -1,7 +1,7 @@
 /*
  * Buck_EPwm.h
  *
- *  Created on: 2016Äê7ÔÂ6ÈÕ
+ *  Created on: 2016ï¿½ï¿½7ï¿½ï¿½6ï¿½ï¿½
  *      Author: Romeli
  */
 
@@ -13,6 +13,6 @@
 
 void Epwm2_Init(void);
 void InitEPwm2Config(void);
-void Epwm2_Update(Uint16 CMP);
+void Epwm2_Update(float64 Duty);
 
 #endif /* INC_BUCK_EPWM_H_ */
