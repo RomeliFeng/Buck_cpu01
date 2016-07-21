@@ -4,6 +4,8 @@
  *  Created on: 2016��7��13��
  *      Author: Romeli
  *      Work For EC11
+ *      PinMap:  	|P20------xint1|*
+ *      			|P21------xint2|*
  */
 #include "Xint.h"
 

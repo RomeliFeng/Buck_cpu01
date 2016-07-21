@@ -3,11 +3,11 @@
  *
  *  Created on: 2016��5��22��
  *      Author: Romeli
- *      PinMap:		|P14------DC|
- *      			|P15-----RES|
- *      			|P16----MOSI|
+ *      PinMap:		|P14------DC|*
+ *      			|P15-----RES|*
+ *      			|P16----MOSI|*
  *      			|P17----MISO|
- *      			|P18-----SLK|
+ *      			|P18-----SLK|*
  *      			|P19-----STE|
  */
 #include "OLED.h"

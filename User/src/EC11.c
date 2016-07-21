@@ -3,9 +3,9 @@
  *
  *  Created on: 2016��7��10��
  *      Author: Romeli
- *      PinMap:		|P59--------Dir|
- *      			|P20------xint1|
- *      			|P21------xint2|
+ *      PinMap:		|P59--------Dir|*
+ *      			|P20------xint1|*
+ *      			|P21------xint2|*
  */
 #include "EC11.h"
 
