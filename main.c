@@ -20,6 +20,7 @@ void main(void) {
 	Timer_Init();				//Work for mills ms's Timebase
 	Xint_Init();				//Work for EC11
 	ADC_Init();
+	EC11_Init();
 	/**********************************************PIE Config*************************************************/
 	PIE_Init();					//ADC Epwm2 Xint Timer
 	/**********************************************User Config*************************************************/

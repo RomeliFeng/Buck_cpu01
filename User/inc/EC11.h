@@ -1,7 +1,7 @@
 /*
  * EC11.h
  *
- *  Created on: 2016Äê7ÔÂ10ÈÕ
+ *  Created on: 2016ï¿½ï¿½7ï¿½ï¿½10ï¿½ï¿½
  *      Author: Romeli
  */
 
@@ -11,6 +11,7 @@
 #include "F2837xS_device.h"     // Headerfile Include File
 #include "F2837xS_Examples.h"   // Examples Include File
 
+void EC11_Init();
 extern void EC11_Key_Click();
 extern void EC11_Key_Press();
 extern void EC11_Clockwise();

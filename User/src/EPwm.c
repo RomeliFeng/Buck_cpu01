@@ -80,17 +80,17 @@ void InitEPwm2Config(void) {
 void Epwm2_Update(float64 Duty) {
 	static Uint16 Max_Cmp = Def_TBPRD - Def_DBRED - Def_DBFED;	//calc cmpA
 	Uint16 Cmp;
-	if (Duty <= 20 && TBPRD_Flag != low_Grad) {	//nor_Grad: 4000; low_Grad:10000; grd_Grad:20000
+	if (Duty <= 0.20 && TBPRD_Flag != low_Grad) {	//nor_Grad: 4000; low_Grad:10000; grd_Grad:20000
 		TBPRD_Flag = 1;
 		EPwm2Regs.TBPRD = low_Grad;
 		Max_Cmp = EPwm2Regs.TBPRD - EPwm2Regs.DBRED.bit.DBRED//recalc max cmpA
 				- EPwm2Regs.DBFED.bit.DBFED;
-	} else if (Duty <= 10 && TBPRD_Flag != grd_Grad) {
+	} else if (Duty <= 0.10 && TBPRD_Flag != grd_Grad) {
 		TBPRD_Flag = 2;
 		EPwm2Regs.TBPRD = grd_Grad;
 		Max_Cmp = EPwm2Regs.TBPRD - EPwm2Regs.DBRED.bit.DBRED//recalc max cmpA
 				- EPwm2Regs.DBFED.bit.DBFED;
-	} else if (Duty > 20 && TBPRD_Flag != nor_Grad) {
+	} else if (Duty > 0.20 && TBPRD_Flag != nor_Grad) {
 		TBPRD_Flag = 0;
 		EPwm2Regs.TBPRD = nor_Grad;
 		Max_Cmp = EPwm2Regs.TBPRD - EPwm2Regs.DBRED.bit.DBRED//recalc max cmpA

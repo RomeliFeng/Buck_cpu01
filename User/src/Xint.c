@@ -26,11 +26,6 @@ void Xint_Gpio_Init(void) {
 	GpioCtrlRegs.GPAQSEL2.bit.GPIO21 = 2;        // XINT2 Qual using 6 samples
 	GpioCtrlRegs.GPACTRL.bit.QUALPRD2 = 0x1F;    // Each sampling window is 32*SYSCLKOUT
 
-	GpioCtrlRegs.GPAMUX2.bit.GPIO17 = 0;		 // GPIO
-	GpioCtrlRegs.GPADIR.bit.GPIO17 = 0;          // input
-	GpioCtrlRegs.GPAQSEL2.bit.GPIO17 = 0;        // Sync
-	EDIS;
-
 	// GPIO20 is XINT1, GPIO21 is XINT2
 	GPIO_SetupXINT1Gpio(20);
 	GPIO_SetupXINT2Gpio(21);
