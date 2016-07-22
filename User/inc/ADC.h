@@ -1,7 +1,7 @@
 /*
  * ADC.h
  *
- *  Created on: 2016Äê7ÔÂ13ÈÕ
+ *  Created on: 2016ï¿½ï¿½7ï¿½ï¿½13ï¿½ï¿½
  *      Author: Romeli
  */
 
@@ -13,11 +13,11 @@
 
 #define ADCSumNum 8
 
-int comp(const void*a,const void*b);
 void ADC_Init(void);
 void SetupADCInterrupt(void);
 void ConfigureADC(void);
 void ADC_GetData(void);
+int comp(const void*a,const void*b);
 
 typedef struct {
 	Uint8 Index;
@@ -27,10 +27,10 @@ typedef struct {
 
 typedef struct {
 	_ADCChanel A0;
+	_ADCChanel A4;
 	_ADCChanel B0;
 } _ADCData;
 
 extern _ADCData ADCData;
-extern Uint32 aaa;
 
 #endif /* ADC_H_ */

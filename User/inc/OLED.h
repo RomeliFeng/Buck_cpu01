@@ -1,7 +1,7 @@
 /*
  * OLED.h
  *
- *  Created on: 2016Äê5ÔÂ22ÈÕ
+ *  Created on: 2016ï¿½ï¿½5ï¿½ï¿½22ï¿½ï¿½
  *      Author: Romeli
  *  Depend on: "Delay.h" & "SPI.h"
  */
@@ -22,7 +22,7 @@ typedef enum
 	C6x8 = 6, C8x16 = 8, C16x16 = 16
 } CharMode;
 
-void OLED_GPIO_Init();
+void OLED_Gpio_Init();
 void OLED_Init();
 void OLED_Write(unsigned char data, WriteMode mode);
 void OLED_Set_pos(unsigned char x, unsigned char y);

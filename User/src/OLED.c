@@ -443,7 +443,7 @@ const unsigned char F16x16[][32] = { { 0x00, 0x00, 0x18, 0x16, 0x10, 0xD0, 0xB8,
 		0x1C, 0x07, 0x1C, 0x24, 0x47, 0x84, 0x00 }, /*"��",5*/
 };
 
-void OLED_GPIO_Init() {
+void OLED_Gpio_Init() {
 	EALLOW;
 	//!!!!!�ܱ�����Ҫ����
 	//DC
@@ -458,7 +458,7 @@ void OLED_GPIO_Init() {
 }
 
 void OLED_Init() {
-	OLED_GPIO_Init();
+	OLED_Gpio_Init();
 
 	GpioDataRegs.GPACLEAR.bit.GPIO15 = 1;
 	DELAY_US(10000);

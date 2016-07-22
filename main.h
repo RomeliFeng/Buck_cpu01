@@ -18,5 +18,6 @@
 #include "ADC.h"
 #include "Xint.h"
 #include "PID.h"
+#include "LED.h"
 
 #endif /* MAIN_H_ */

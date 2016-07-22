@@ -13,6 +13,7 @@
 
 void Epwm2_Init(void);
 void InitEPwm2Config(void);
-void Epwm2_Update(float64 Duty);
+void Epwm2_Update_Compare(Uint16 Cmp);
+void Epwm2_Update_Duty(float64 Duty);
 
 #endif /* INC_BUCK_EPWM_H_ */

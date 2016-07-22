@@ -18,6 +18,8 @@ enum {
 	nor_Grad = 3999, low_Grad = 9999, grd_Grad = 19999
 } TBPRD_Grad;
 
+extern Epwm2_Service();
+
 void Epwm2_Init(void) {
 	InitEPwm2Gpio();
 	InitEPwm2Config();
@@ -33,7 +35,7 @@ void InitEPwm2Config(void) {
 	CpuSysRegs.PCLKCR0.bit.TBCLKSYNC = 0;
 	EDIS;
 
-	EPwm2Regs.TBPRD = 4000;                       // Set timer period
+	EPwm2Regs.TBPRD = 3999;                       // Set timer period
 	EPwm2Regs.TBPHS.bit.TBPHS = 0x0000;           // Phase is 0
 	EPwm2Regs.TBCTR = 0x0000;                     // Clear counter
 
@@ -51,7 +53,7 @@ void InitEPwm2Config(void) {
 
 	// Setup compare
 	EPwm2Regs.CMPA.bit.CMPA = 0;
-//	EPwm2Regs.CMPB.bit.CMPB = 512;
+	EPwm2Regs.CMPB.bit.CMPB = 200;
 	// Set actions
 	EPwm2Regs.AQCTLA.bit.PRD = AQ_SET;            // Set PWM2A on Zero
 	EPwm2Regs.AQCTLA.bit.CAU = AQ_CLEAR;
@@ -66,10 +68,15 @@ void InitEPwm2Config(void) {
 	EPwm2Regs.DBRED.bit.DBRED = 64;
 	EPwm2Regs.DBFED.bit.DBFED = 64;
 
+	// Set SOC for ADC
+	EPwm2Regs.ETSEL.bit.SOCAEN = 0;	        // Disable SOC on A group
+	EPwm2Regs.ETSEL.bit.SOCASEL = 6;	        // Select SOC on up-count CMPB
+	EPwm2Regs.ETPS.bit.SOCAPRD = 1; 	        // Generate pulse on 1st event
+
 	// Interrupt where we will modify the deadband
 	EPwm2Regs.ETSEL.bit.INTSEL = ET_CTR_ZERO;     // Select INT on Zero event
 	EPwm2Regs.ETSEL.bit.INTEN = 1;                // Enable INT
-	EPwm2Regs.ETPS.bit.INTPRD = ET_3RD;           // Generate INT on 3rd event
+	EPwm2Regs.ETPS.bit.INTPRD = ET_1ST;           // Generate INT on 1rd event
 
 	//ʹ��TBʱ��
 	EALLOW;
@@ -77,22 +84,22 @@ void InitEPwm2Config(void) {
 	EDIS;
 }
 
-void Epwm2_Update(float64 Duty) {
+void Epwm2_Update_Duty(float64 Duty) {
 	static Uint16 Max_Cmp = Def_TBPRD - Def_DBRED - Def_DBFED;	//calc cmpA
 	Uint16 Cmp;
-	if (Duty <= 0.20 && TBPRD_Flag != low_Grad) {	//nor_Grad: 4000; low_Grad:10000; grd_Grad:20000
-		TBPRD_Flag = 1;
-		EPwm2Regs.TBPRD = low_Grad;
+	if (Duty <= 0.10 && TBPRD_Flag != grd_Grad) {
+		TBPRD_Flag = grd_Grad;
+		EPwm2Regs.TBPRD = TBPRD_Flag;
 		Max_Cmp = EPwm2Regs.TBPRD - EPwm2Regs.DBRED.bit.DBRED//recalc max cmpA
 				- EPwm2Regs.DBFED.bit.DBFED;
-	} else if (Duty <= 0.10 && TBPRD_Flag != grd_Grad) {
-		TBPRD_Flag = 2;
-		EPwm2Regs.TBPRD = grd_Grad;
+	} else if (Duty > 0.10 && Duty <= 0.20 && TBPRD_Flag != low_Grad) {	//nor_Grad: 3999; low_Grad:9999; grd_Grad:19999
+		TBPRD_Flag = low_Grad;
+		EPwm2Regs.TBPRD = TBPRD_Flag;
 		Max_Cmp = EPwm2Regs.TBPRD - EPwm2Regs.DBRED.bit.DBRED//recalc max cmpA
 				- EPwm2Regs.DBFED.bit.DBFED;
 	} else if (Duty > 0.20 && TBPRD_Flag != nor_Grad) {
-		TBPRD_Flag = 0;
-		EPwm2Regs.TBPRD = nor_Grad;
+		TBPRD_Flag = nor_Grad;
+		EPwm2Regs.TBPRD = TBPRD_Flag;
 		Max_Cmp = EPwm2Regs.TBPRD - EPwm2Regs.DBRED.bit.DBRED//recalc max cmpA
 				- EPwm2Regs.DBFED.bit.DBFED;
 	}
@@ -100,9 +107,15 @@ void Epwm2_Update(float64 Duty) {
 	Cmp = Cmp > Max_Cmp ? Max_Cmp : Cmp;		//limit cmp
 	EPwm2Regs.CMPA.bit.CMPA = Cmp;				//push cmp to res
 }
-
+void Epwm2_Update_Compare(Uint16 Cmp) {
+	Uint16 Max_Cmp = EPwm2Regs.TBPRD - EPwm2Regs.DBRED.bit.DBRED//recalc max cmpA
+			- EPwm2Regs.DBFED.bit.DBFED;
+	Cmp = Cmp > Max_Cmp ? Max_Cmp : Cmp;		//limit cmp
+	EPwm2Regs.CMPA.bit.CMPA = Cmp;				//push cmp to res
+}
 __interrupt void epwm2_isr(void) {
 
+	Epwm2_Service();
 // Clear INT flag for this timer
 	EPwm2Regs.ETCLR.bit.INT = 1;
 
