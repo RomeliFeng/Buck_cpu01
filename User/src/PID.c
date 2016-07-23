@@ -84,6 +84,12 @@ float64 PID_Compute_Outside(float64 Now_Inside, float64 Now_Outside) {
 	Set_Inside = Output_Outside;				//Oupt_Outside for Set_Inside
 	return PID_Compute_Inside(Now_Inside);
 }
-void PID_Set_Outside_Max(float64 max) {
+void PID_Set_Output_Inside_max(float64 max) {
 	Output_Outside_Max = max;
+}
+void PID_Set_Output_Inside(float64 set) {
+	Output_Inside = set;
+}
+void PID_Set_Output_Outside(float64 set) {
+	Output_Outside = set;
 }

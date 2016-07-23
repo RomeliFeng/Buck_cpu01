@@ -14,7 +14,9 @@
 //void PID_Set(float64 P,float64 I,float64 D);
 float64 PID_Compute_Inside(float64 Now_Inside);
 float64 PID_Compute_Outside();
-void PID_Set_Outside_Max(float64 max);
+void PID_Set_Output_Inside(float64 set);
+void PID_Set_Output_Inside_max(float64 max);
+void PID_Set_Output_Outside(float64 set);
 
 extern volatile float64 Set_Outside;
 extern volatile float64 Set_Inside;

@@ -531,8 +531,16 @@ void OLED_Fill(unsigned char bmp_dat) {
 
 }
 
-void OLED_Print_str(unsigned char x, unsigned char y, char* str, CharMode mode) {
-	while (x <= (128 - (128 % mode) - mode) && *str != '\0') //�������һλ��дλ && ѭ������ַ�
+void OLED_Print_str(unsigned char x, unsigned char y, char* str,
+		unsigned char digit, CharMode mode) {
+	Uint8 SpaceLen = 0;
+	if (digit != 0 && strlen(str) < digit)
+		SpaceLen = digit - strlen(str);
+	while (SpaceLen--) {
+		OLED_Print_c(x, y, ' ', mode);
+		x += mode;
+	}
+	while (x <= (128 - (128 % mode) - mode) && *str != '\0') //limit string len no outside screen
 	{
 		OLED_Print_c(x, y, *str, mode);
 		x += mode;
@@ -540,20 +548,21 @@ void OLED_Print_str(unsigned char x, unsigned char y, char* str, CharMode mode) 
 	}
 }
 
-void OLED_Print_num(unsigned char x, unsigned char y, long num, CharMode mode) {
+void OLED_Print_num(unsigned char x, unsigned char y, long num,
+		unsigned char digit, CharMode mode) {
 	char str[20];
 	sprintf(str, "%ld", num);
-	OLED_Print_str(x, y, str, mode);
+	OLED_Print_str(x, y, str, digit, mode);
 }
 
 void OLED_Print_lf(unsigned char x, unsigned char y, double lf,
-		unsigned char ndigit, CharMode mode) {
+		unsigned char digit, unsigned char ndigit, CharMode mode) {
 	char str[20];
 	char str1[10];
 	sprintf(str, "%d", (int) lf);
 	sprintf(str1, "%d", (int) ((lf - (int) lf) * pow(10, ndigit)));
 	strcat(strcat(str, "."), str1);
-	OLED_Print_str(x, y, str, mode);
+	OLED_Print_str(x, y, str, digit, mode);
 }
 
 void OLED_Print_c(unsigned char x, unsigned char y, char c, CharMode mode) {

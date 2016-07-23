@@ -35,12 +35,11 @@ void PIE_Init() {
 //	PieVectTable.ADCB1_INT = &adcb1_isr;
 	EDIS;
 
-	// Enable CPU INT3 which is connected to EPWM1-3 INT:
 	PieCtrlRegs.PIECTRL.bit.ENPIE = 1;			// Enable the PIE block
 	PieCtrlRegs.PIEIER3.bit.INTx2 = 1;	   // Enable PIE Group 3 INT2; For EPwm2
 	PieCtrlRegs.PIEIER1.bit.INTx4 = 1;    // Enable PIE Group 1 INT4; For Xint1
 	PieCtrlRegs.PIEIER1.bit.INTx5 = 1;     // Enable PIE Group 1 INT5; For Xint2
-//	PieCtrlRegs.PIEIER1.bit.INTx7 = 1; // Enable Timer0
+	PieCtrlRegs.PIEIER1.bit.INTx7 = 1; // Enable Timer0
 //	PieCtrlRegs.PIEIER1.bit.INTx1 = 1;			// Enable ADCA1
 //	PieCtrlRegs.PIEIER1.bit.INTx2 = 1;			// Enable ADCB1
 	IER |= M_INT3;								// Enable PIE Group 3; For EPwm2

@@ -40,7 +40,7 @@ void InitEPwm2Config(void) {
 	EPwm2Regs.TBCTR = 0x0000;                     // Clear counter
 
 	// Setup TBCLK
-	EPwm2Regs.TBCTL.bit.CTRMODE = TB_COUNT_UP; // Count up
+	EPwm2Regs.TBCTL.bit.CTRMODE = TB_FREEZE; 		// Count up
 	EPwm2Regs.TBCTL.bit.PHSEN = TB_DISABLE;        // Disable phase loading
 	EPwm2Regs.TBCTL.bit.HSPCLKDIV = TB_DIV1;       // Clock ratio to SYSCLKOUT
 	EPwm2Regs.TBCTL.bit.CLKDIV = TB_DIV1;         // Slow just to observe on the
@@ -74,7 +74,7 @@ void InitEPwm2Config(void) {
 	EPwm2Regs.ETPS.bit.SOCAPRD = 1; 	        // Generate pulse on 1st event
 
 	// Interrupt where we will modify the deadband
-	EPwm2Regs.ETSEL.bit.INTSEL = ET_CTR_ZERO;     // Select INT on Zero event
+	EPwm2Regs.ETSEL.bit.INTSEL = ET_CTR_PRD;     // Select INT on Zero event
 	EPwm2Regs.ETSEL.bit.INTEN = 1;                // Enable INT
 	EPwm2Regs.ETPS.bit.INTPRD = ET_1ST;           // Generate INT on 1rd event
 
@@ -113,7 +113,7 @@ void Epwm2_Update_Compare(Uint16 Cmp) {
 	Cmp = Cmp > Max_Cmp ? Max_Cmp : Cmp;		//limit cmp
 	EPwm2Regs.CMPA.bit.CMPA = Cmp;				//push cmp to res
 }
-__interrupt void epwm2_isr(void) {
+__interrupt void epwm2_isr(void) {//if epwn init before adc delay,epwn interrupt will not be active
 
 	Epwm2_Service();
 // Clear INT flag for this timer

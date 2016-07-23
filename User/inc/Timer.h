@@ -1,7 +1,7 @@
 /*
  * Timer.h
  *
- *  Created on: 2016Äê7ÔÂ12ÈÕ
+ *  Created on: 2016ï¿½ï¿½7ï¿½ï¿½12ï¿½ï¿½
  *      Author: Romeli
  */
 
@@ -13,6 +13,6 @@
 
 void Timer_Init();
 
-extern volatile Uint32 micros;
+extern volatile Uint32 millis;
 
 #endif /* TIMER_H_ */

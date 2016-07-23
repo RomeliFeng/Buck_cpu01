@@ -1,18 +1,18 @@
 /*
  * Timer.c
  *
- *  Created on: 2016Äê7ÔÂ12ÈÕ
+ *  Created on: 2016ï¿½ï¿½7ï¿½ï¿½12ï¿½ï¿½
  *      Author: Romeli
  */
 
 #include "Timer.h"
 #include "SWPrioritizedIsrLevels.h"
 
-volatile uint_fast32_t micros = 0;
+volatile uint_fast32_t millis = 0;
 
 void Timer_Init() {
 	InitCpuTimers();
-	ConfigCpuTimer(&CpuTimer0, 200, 1);	//Init CpuTimer1 in 200M Cycle:1mS
+	ConfigCpuTimer(&CpuTimer0, 200000, 1);	//Init CpuTimer1 in 200M Cycle:1mS
 	CpuTimer0Regs.TCR.bit.TIE = 1;			//Enable CpuTimer1 Interrupt
 	CpuTimer0Regs.TCR.bit.TSS = 0;			//Enable running
 }
@@ -28,7 +28,7 @@ __interrupt void cpu_timer0_isr(void) {
 //	EINT;
 
 	// Insert ISR Code here.......
-	micros++;
+	millis++;
 
 //	// Restore registers saved:
 //	DINT;

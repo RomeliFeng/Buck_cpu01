@@ -14,7 +14,7 @@
 #define ADCSumNum 8
 
 void ADC_Init(void);
-void SetupADCInterrupt(void);
+void SetupADCMode(void);
 void ConfigureADC(void);
 void ADC_GetData(void);
 int comp(const void*a,const void*b);

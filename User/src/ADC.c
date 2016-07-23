@@ -15,15 +15,16 @@ _ADCData ADCData;
 
 void ADC_Init(void) {
 	ConfigureADC();
-	SetupADCInterrupt();
+	SetupADCMode();
 //	AdcaRegs.ADCSOCFRC1.bit.SOC0 = 1;
 //	AdcbRegs.ADCSOCFRC1.bit.SOC0 = 1;
 	EALLOW;
-	EPwm2Regs.ETSEL.bit.SOCAEN = 1;	        // Disable SOC on A group
+	EPwm2Regs.ETSEL.bit.SOCAEN = 1;	        // Enable SOC on A group
+	EPwm2Regs.TBCTL.bit.CTRMODE=TB_COUNT_UP;
 	EDIS;
 }
 
-void SetupADCInterrupt(void) {
+void SetupADCMode(void) {
 	Uint16 acqps;
 
 	//determine minimum acquisition window (in SYSCLKS) based on resolution
@@ -80,14 +81,14 @@ void ConfigureADC(void) {
 	AdcbRegs.ADCCTL1.bit.ADCPWDNZ = 1;
 
 	//delay for 1ms to allow ADC time to power up
-	DELAY_US(1000);
+	DELAY_US(1000);				//if epwn init before adc delay,epwn interrupt will not be active
 
 	EDIS;
 }
 void ADC_GetData(void) {
 	ADCData.A0.FinaData = AdcaResultRegs.ADCRESULT0;		//Get data from A0
-	ADCData.A4.FinaData = AdcaResultRegs.ADCRESULT1;		//Get data from A0
-	ADCData.B0.FinaData = AdcaResultRegs.ADCRESULT0;		//Get data from B0
+	ADCData.A4.FinaData = AdcaResultRegs.ADCRESULT1;		//Get data from A4
+	ADCData.B0.FinaData = AdcbResultRegs.ADCRESULT0;		//Get data from B0
 
 //	//Start newADCSOCFRC1.bit.SOC0 = 1; convert
 //	AdcaRegs.
