@@ -19,5 +19,6 @@
 #include "Xint.h"
 #include "PID.h"
 #include "LED.h"
+#include "Buzzer.h"
 
 #endif /* MAIN_H_ */

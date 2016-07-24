@@ -3,7 +3,8 @@
  *
  *  Created on: 2016��5��22��
  *      Author: Romeli
- *      PinMap:		|P14------DC|*
+ *      PinMap:		|P12------CS|*
+ *      			|P14------DC|*
  *      			|P15-----RES|*
  *      			|P16----MOSI|*
  *      			|P17----MISO|
@@ -446,6 +447,10 @@ const unsigned char F16x16[][32] = { { 0x00, 0x00, 0x18, 0x16, 0x10, 0xD0, 0xB8,
 void OLED_Gpio_Init() {
 	EALLOW;
 	//!!!!!�ܱ�����Ҫ����
+	//CS
+	GpioCtrlRegs.GPAPUD.bit.GPIO12 = GPIO_PULLUP;
+	GpioCtrlRegs.GPADIR.bit.GPIO12 = GPIO_OUTPUT;
+	GpioCtrlRegs.GPAGMUX1.bit.GPIO12 = GPIO_MUX_CPU1;
 	//DC
 	GpioCtrlRegs.GPAPUD.bit.GPIO14 = GPIO_PULLUP;
 	GpioCtrlRegs.GPADIR.bit.GPIO14 = GPIO_OUTPUT;
@@ -455,6 +460,8 @@ void OLED_Gpio_Init() {
 	GpioCtrlRegs.GPADIR.bit.GPIO15 = GPIO_OUTPUT;
 	GpioCtrlRegs.GPAGMUX1.bit.GPIO15 = GPIO_MUX_CPU1;
 	EDIS;
+
+	GpioDataRegs.GPADAT.bit.GPIO12 = 0;
 }
 
 void OLED_Init() {
@@ -499,7 +506,6 @@ void OLED_Init() {
 }
 
 void OLED_Write(unsigned char data, WriteMode mode) {
-
 	if (mode == Cmd_Mode) {
 		if (GpioDataRegs.GPADAT.bit.GPIO14 == 1) {
 			DELAY_US(1);

@@ -8,6 +8,8 @@
 #include "Timer.h"
 #include "SWPrioritizedIsrLevels.h"
 
+extern void Buzzer_isr();
+
 volatile uint_fast32_t millis = 0;
 
 void Timer_Init() {
@@ -15,6 +17,12 @@ void Timer_Init() {
 	ConfigCpuTimer(&CpuTimer0, 200000, 1);	//Init CpuTimer1 in 200M Cycle:1mS
 	CpuTimer0Regs.TCR.bit.TIE = 1;			//Enable CpuTimer1 Interrupt
 	CpuTimer0Regs.TCR.bit.TSS = 0;			//Enable running
+}
+
+void Delay(Uint16 ms) {
+	Uint32 t = millis;
+	while (millis - t < ms)
+		;
 }
 
 __interrupt void cpu_timer0_isr(void) {
@@ -29,7 +37,7 @@ __interrupt void cpu_timer0_isr(void) {
 
 	// Insert ISR Code here.......
 	millis++;
-
+	Buzzer_isr();
 //	// Restore registers saved:
 //	DINT;
 //	PieCtrlRegs.PIEIER1.all = TempPIEIER;

@@ -12,6 +12,7 @@
 #include "F2837xS_Examples.h"   // Examples Include File
 
 void Timer_Init();
+void Delay(Uint16 ms);
 
 extern volatile Uint32 millis;
 

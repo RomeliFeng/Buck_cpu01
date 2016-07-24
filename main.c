@@ -11,7 +11,7 @@ float64 U_now;
 float64 I_max = 300;
 float64 DUTY = 0;
 Color a;
-
+Uint16 i=1;
 
 void main(void) {
 
@@ -25,6 +25,7 @@ void main(void) {
 	Xint_Init();				//Work for EC11
 	EC11_Init();
 	LED_Init();
+	Buzzer_Init();
 	/**********************************************PIE Config*************************************************/
 	PIE_Init();					//ADC Epwm2 Xint Timer
 	/**********************************************User Config*************************************************/
@@ -32,10 +33,12 @@ void main(void) {
 	t = millis;
 	Epwm2_Update_Duty(0.3);
 	while (1) {
-		OLED_Print_str(0,0,"213",5,C6x8);
-		OLED_Print_str(0,1,"231",0,C6x8);
-		OLED_Print_str(0,2,"213w",5,C6x8);
-		OLED_Print_str(0,3,"2231",0,C6x8);
+//		OLED_Print_str(0,0,"213",5,C6x8);
+//		OLED_Print_str(0,1,"231",0,C6x8);
+//		OLED_Print_str(0,2,"213w",5,C6x8);
+//		OLED_Print_str(0,3,"2231",0,C6x8);
+		Buzzer_beep();
+		Delay(1000);
 	}
 }
 void Epwm2_Service() {
